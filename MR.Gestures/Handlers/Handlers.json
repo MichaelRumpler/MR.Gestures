@@ -1,0 +1,188 @@
+﻿[
+  {
+    "Name": "ActivityIndicator",
+    "Shared": true,
+    "Android": "Android.Widget.ProgressBar",
+    "iOS": "Microsoft.Maui.Platform.MauiActivityIndicator",
+    "Windows": "Microsoft.UI.Xaml.Controls.ProgressRing"
+  },
+  {
+    "Name": "Border",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.ContentViewGroup",
+    "iOS": "Microsoft.Maui.Platform.ContentView",
+    "Windows": "Microsoft.Maui.Platform.ContentPanel"
+  },
+  {
+    "Name": "Button",
+    "Shared": true,
+    "Android": "Google.Android.Material.Button.MaterialButton",
+    "iOS": "UIKit.UIButton",
+    "Windows": "Microsoft.UI.Xaml.Controls.Button"
+  },
+  {
+    "Name": "CheckBox",
+    "Shared": true,
+    "Android": "AndroidX.AppCompat.Widget.AppCompatCheckBox",
+    "iOS": "Microsoft.Maui.Platform.MauiCheckBox",
+    "Windows": "Microsoft.UI.Xaml.Controls.CheckBox"
+  },
+  {
+    "Name": "ContentView",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.ContentViewGroup",
+    "iOS": "Microsoft.Maui.Platform.ContentView",
+    "Windows": "Microsoft.Maui.Platform.ContentPanel"
+  },
+  {
+    "Name": "DatePicker",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.MauiDatePicker",
+    "iOS": "Microsoft.Maui.Platform.MauiDatePicker",
+    "Mac": "UIKit.UIDatePicker",
+    "Windows": "Microsoft.UI.Xaml.Controls.CalendarDatePicker"
+  },
+  {
+    "Name": "Editor",
+    "Shared": true,
+    "Android": "AndroidX.AppCompat.Widget.AppCompatEditText",
+    "iOS": "Microsoft.Maui.Platform.MauiTextView",
+    "Windows": "Microsoft.UI.Xaml.Controls.TextBox"
+  },
+  {
+    "Name": "Entry",
+    "Shared": true,
+    "Android": "AndroidX.AppCompat.Widget.AppCompatEditText",
+    "iOS": "Microsoft.Maui.Platform.MauiTextField",
+    "Windows": "Microsoft.UI.Xaml.Controls.TextBox"
+  },
+  {
+    "Name": "GraphicsView",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.PlatformTouchGraphicsView",
+    "iOS": "Microsoft.Maui.Platform.PlatformTouchGraphicsView",
+    "Windows": "Microsoft.Maui.Platform.PlatformTouchGraphicsView"
+  },
+  {
+    "Name": "Image",
+    "Shared": true,
+    "Android": "Android.Widget.ImageView",
+    "iOS": "UIKit.UIImageView",
+    "Windows": "Microsoft.UI.Xaml.Controls.Image"
+  },
+  {
+    "Name": "ImageButton",
+    "Shared": true,
+    "Android": "Google.Android.Material.ImageView.ShapeableImageView",
+    "iOS": "UIKit.UIButton",
+    "Windows": "Microsoft.UI.Xaml.Controls.Button"
+  },
+  {
+    "Name": "IndicatorView",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.MauiPageControl",
+    "iOS": "Microsoft.Maui.Platform.MauiPageControl",
+    "Windows": "Microsoft.Maui.Platform.MauiPageControl"
+  },
+  {
+    "Name": "Label",
+    "Shared": true,
+    "Android": "AndroidX.AppCompat.Widget.AppCompatTextView",
+    "iOS": "Microsoft.Maui.Platform.MauiLabel",
+    "Windows": "Microsoft.UI.Xaml.Controls.TextBlock"
+  },
+  {
+    "Name": "Layout",
+    "Shared": true,
+    "Elements": [ "AbsoluteLayout", "FlexLayout", "Grid", "HorizontalStackLayout", "StackLayout", "VerticalStackLayout" ],
+    "Android": "Microsoft.Maui.Platform.LayoutViewGroup",
+    "iOS": "Microsoft.Maui.Platform.LayoutView",
+    "Windows": "Microsoft.Maui.Platform.LayoutPanel"
+  },
+  {
+    "Name": "Page",
+    "Shared": true,
+    "Elements": [ "ContentPage" ],
+    "Android": "Microsoft.Maui.Platform.ContentViewGroup",
+    "iOS": "Microsoft.Maui.Platform.ContentView",
+    "Windows": "Microsoft.Maui.Platform.ContentPanel"
+  },
+  {
+    "Name": "Picker",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.MauiPicker",
+    "iOS": "Microsoft.Maui.Platform.MauiPicker",
+    "Windows": "Microsoft.UI.Xaml.Controls.ComboBox"
+  },
+  {
+    "Name": "ProgressBar",
+    "Shared": true,
+    "Android": "Android.Widget.ProgressBar",
+    "iOS": "UIKit.UIProgressView",
+    "Windows": "Microsoft.UI.Xaml.Controls.ProgressBar"
+  },
+  {
+    "Name": "RadioButton",
+    "Shared": true,
+    "iOS": "Microsoft.Maui.Platform.ContentView",
+    "Windows": "Microsoft.UI.Xaml.Controls.RadioButton"
+  },
+  {
+    "Name": "ScrollView",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.MauiScrollView",
+    "iOS": "UIKit.UIScrollView",
+    "Windows": "Microsoft.UI.Xaml.Controls.ScrollViewer"
+  },
+  {
+    "Name": "SearchBar",
+    "Shared": true,
+    "Android": "AndroidX.AppCompat.Widget.SearchView",
+    "iOS": "Microsoft.Maui.Platform.MauiSearchBar",
+    "Windows": "Microsoft.UI.Xaml.Controls.AutoSuggestBox"
+  },
+  {
+    "Name": "ShapeView",
+    "Shared": true,
+    "Elements": [ "BoxView" ],
+    "Android": "Microsoft.Maui.Platform.MauiShapeView",
+    "iOS": "Microsoft.Maui.Platform.MauiShapeView",
+    "Windows": "Microsoft.Maui.Graphics.Win2D.W2DGraphicsView"
+  },
+  {
+    "Name": "Slider",
+    "Shared": true,
+    "Android": "Android.Widget.SeekBar",
+    "iOS": "UIKit.UISlider",
+    "Windows": "Microsoft.UI.Xaml.Controls.Slider"
+  },
+  {
+    "Name": "Stepper",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.MauiStepper",
+    "iOS": "UIKit.UIStepper",
+    "Windows": "Microsoft.Maui.Platform.MauiStepper"
+  },
+  {
+    "Name": "Switch",
+    "Shared": true,
+    "Android": "AndroidX.AppCompat.Widget.SwitchCompat",
+    "iOS": "UIKit.UISwitch",
+    "Windows": "Microsoft.UI.Xaml.Controls.ToggleSwitch"
+  },
+  {
+    "Name": "TimePicker",
+    "Shared": true,
+    "Android": "Microsoft.Maui.Platform.MauiTimePicker",
+    "iOS": "Microsoft.Maui.Platform.MauiTimePicker",
+    "Mac": "UIKit.UIDatePicker",
+    "Windows": "Microsoft.UI.Xaml.Controls.TimePicker"
+  },
+  {
+    "Name": "WebView",
+    "Shared": true,
+    "Android": "Android.Webkit.WebView",
+    "iOS": "WebKit.WKWebView",
+    "Windows": "Microsoft.UI.Xaml.Controls.WebView2"
+  }
+]

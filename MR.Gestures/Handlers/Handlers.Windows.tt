@@ -1,0 +1,62 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Memory" #>
+<#@ assembly name="System.Text.Json" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text.Json" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using MR.Gestures.WinUI;
+
+namespace MR.Gestures.Handlers
+{
+    // DisconnectHandler doesn't work, so I don't need this at all.
+<#
+
+	// var handlers = ReadFile();
+
+	// foreach(var handler in handlers)
+	// {
+	// 	if(!string.IsNullOrEmpty(handler.Windows))
+	// 		RenderClass(handler.Name, handler.Windows);
+	// }
+#>
+}
+<#+
+	private void RenderClass(string handler, string platformView)
+	{
+#>
+    public partial class <#= handler #>Handler : Microsoft.Maui.Handlers.<#= handler #>Handler
+    {
+        protected override void DisconnectHandler(<#= platformView #> platformView)
+        {
+            WinUIGestureHandler.RemoveInstance((IGestureAwareControl)VirtualView);
+            base.DisconnectHandler(platformView);
+        }
+    }
+
+<#+
+	}
+
+    private IEnumerable<HandlerModel> ReadFile()
+    {
+        string fileName = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "Handlers.json");
+        StreamReader reader = new StreamReader(fileName);
+        var handlers = System.Text.Json.JsonSerializer.Deserialize<HandlerModel[]>(reader.BaseStream);
+        return handlers;
+    }
+
+[Serializable]
+public class HandlerModel
+{
+    public string Name { get; set; }
+    public bool Shared { get; set; }
+    public string Android { get; set; }
+    public string iOS { get; set; }
+    public string Mac { get; set; }
+    public string Windows { get; set; }
+}
+
+#>

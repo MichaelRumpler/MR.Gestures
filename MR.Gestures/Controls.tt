@@ -1,0 +1,185 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ output extension=".cs" #>
+
+//          Controls.cs is automatically created by Controls.tt
+//          changes in Controls.cs will get lost
+
+using System;
+using System.Diagnostics;
+using System.Windows.Input;
+
+namespace MR.Gestures
+{
+<#
+    var classes = new[] {
+        "AbsoluteLayout", "ActivityIndicator", "BoxView", "Border", "Button", "CheckBox", "ContentPage", "ContentView", "DatePicker", "Editor", "Entry", "EntryCell", "FlexLayout",
+        "Frame", "GraphicsView", "Grid", "HorizontalStackLayout", "Image", "ImageButton", "ImageCell", "IndicatorView", "Label", "ListView", "Picker", "ProgressBar", "RadioButton", /* "RelativeLayout",*/ "ScrollView", "SearchBar", "Slider",
+        /* "Span", */ "StackLayout", "Stepper", "Switch", "SwitchCell", "TabbedPage", "TableView", "TextCell", "TimePicker", "VerticalStackLayout", "ViewCell", "WebView",
+    };
+
+	var events = new[] {
+		new { Name = "Down", EventArg = "DownUp", EventDescription = "a finger comes down. The finger(s) is/are still on the touch screen.", CommandDescription = "a finger comes down" },
+		new { Name = "Up", EventArg = "DownUp", EventDescription = "a finger is lifted from the touch screen. There may be other fingers still on it.", CommandDescription = "a finger is lifted from the touch screen" },
+		new { Name = "Tapping", EventArg = "Tap", EventDescription = "a finger comes down and up again.", CommandDescription = "the element is tapped and another tap may follow" },
+		new { Name = "Tapped", EventArg = "Tap", EventDescription = "no other touch gesture followed Tapping within 250ms.", CommandDescription = "the element is tapped" },
+		new { Name = "DoubleTapped", EventArg = "Tap", EventDescription = "two Tapping events came within 250ms.", CommandDescription = "the element is tapped twice" },
+		new { Name = "LongPressing", EventArg = "LongPress", EventDescription = "a finger comes down and stays there.", CommandDescription = "the element is pressed long" },
+		new { Name = "LongPressed", EventArg = "LongPress", EventDescription = "a finger finally comes up after a LongPressing event.", CommandDescription = "the LongPressed event is raised" },
+		new { Name = "Pinching", EventArg = "Pinch", EventDescription = "two fingers are moved together or away from each other.", CommandDescription = "the element is pinched" },
+		new { Name = "Pinched", EventArg = "Pinch", EventDescription = "at least one finger is released after a Pinching event.", CommandDescription = "the Pinched event is raised" },
+		new { Name = "Panning", EventArg = "Pan", EventDescription = "a finger comes down and then moves in any direction.", CommandDescription = "the element is panned" },
+		new { Name = "Panned", EventArg = "Pan", EventDescription = "a finger comes up after a Panning event.", CommandDescription = "the element was panned" },
+		new { Name = "Swiped", EventArg = "Swipe", EventDescription = "a finger comes down, is moved and still moves when it is raised again.", CommandDescription = "the element is swiped" },
+		new { Name = "Rotating", EventArg = "Rotate", EventDescription = "two fingers come down and their angle is changed.", CommandDescription = "the element is rotated" },
+		new { Name = "Rotated", EventArg = "Rotate", EventDescription = "at least one finger is lifted after a Rotating event.", CommandDescription = "the element was rotated" },
+		new { Name = "MouseEntered", EventArg = "Mouse", EventDescription = "the mouse pointer entered the area over the view.", CommandDescription = "the mouse pointer entered" },
+		new { Name = "MouseMoved", EventArg = "Mouse", EventDescription = "the mouse pointer moved over the view.", CommandDescription = "the mouse pointer moved" },
+		new { Name = "MouseExited", EventArg = "Mouse", EventDescription = "the mouse pointer was moved away from the view.", CommandDescription = "the mouse pointer exited" },
+		new { Name = "ScrollWheelChanged", EventArg = "ScrollWheel", EventDescription = "the scroll wheel was used.", CommandDescription = "the scroll wheel was used" },
+	};
+
+    foreach(var cls in classes)
+    {
+#>
+	#region <#= cls #>
+
+	public partial class <#= cls #> : Microsoft.Maui.Controls.<#= cls #>, IGestureAwareControl
+	{
+		#region GestureHandler
+
+		private GestureHandler gestureHandler;
+		public GestureHandler GestureHandler => gestureHandler ??= new GestureHandler(this);
+
+		#endregion
+<#
+		foreach(var ev in events)
+		{
+	        var tappedModifier = cls.EndsWith("Cell") && ev.Name == "Tapped" ? "new " : "";
+#>
+
+		#region <#= ev.Name #>
+
+		/// <summary>
+		/// The event which is raised when <#= ev.EventDescription #>
+		/// </summary>
+		<#= tappedModifier #>public event EventHandler<<#= ev.EventArg #>EventArgs> <#= ev.Name #>
+		{
+			add { GestureHandler.<#= ev.Name #> += value; OnPropertyChanged(nameof(<#= ev.Name #>)); }
+			remove { GestureHandler.<#= ev.Name #> -= value; OnPropertyChanged(nameof(<#= ev.Name #>)); }
+		}
+
+		/// <summary>
+		/// The BindableProperty for the <#= ev.Name #>Command.
+		/// </summary>
+		public static readonly BindableProperty <#= ev.Name #>CommandProperty = GestureHandler.<#= ev.Name #>CommandProperty;
+		/// <summary>
+		/// The BindableProperty for the <#= ev.Name #>CommandParameter.
+		/// </summary>
+		public static readonly BindableProperty <#= ev.Name #>CommandParameterProperty = GestureHandler.<#= ev.Name #>CommandParameterProperty;
+
+		/// <summary>
+		/// Gets or sets the command which is executed when <#= ev.CommandDescription #>. This is a bindable property.
+		/// </summary>
+		public ICommand <#= ev.Name #>Command
+		{
+            get => (ICommand)GetValue(GestureHandler.<#= ev.Name #>CommandProperty);
+            set => SetValue(GestureHandler.<#= ev.Name #>CommandProperty, value);
+		}
+
+		/// <summary>
+		/// Gets or sets the parameter to pass to the <#= ev.Name #>Command. This is a bindable property.
+		/// </summary>
+		public object <#= ev.Name #>CommandParameter
+		{
+            get => GetValue(GestureHandler.<#= ev.Name #>CommandParameterProperty);
+            set => SetValue(GestureHandler.<#= ev.Name #>CommandParameterProperty, value);
+		}
+
+		#endregion
+<#
+		}
+#>
+	}
+
+	#endregion
+<#
+	}
+
+
+	// GestureHandler:
+#>
+
+	#region GestureHandler
+
+	public partial class GestureHandler : IGestureListener
+	{
+		#region List of all property names
+
+		public static readonly string[] AllProperties = new[] {
+<#
+		foreach(var ev in events)
+		{
+#>
+			"<#= ev.Name #>", "<#= ev.Name #>Command", "<#= ev.Name #>CommandParameter",
+<#
+		}
+#>
+		};
+
+		#endregion
+
+		#region Public Events and BindableProperties
+
+<#
+		foreach(var ev in events)
+		{
+#>
+		public event EventHandler<<#= ev.EventArg #>EventArgs> <#= ev.Name #>;
+		public static readonly BindableProperty <#= ev.Name #>CommandProperty = BindableProperty.Create("<#= ev.Name #>Command", typeof(ICommand), typeof(GestureHandler), null);
+		public static readonly BindableProperty <#= ev.Name #>CommandParameterProperty = BindableProperty.Create("<#= ev.Name #>CommandParameter", typeof(object), typeof(GestureHandler), null);
+
+<#
+		}
+#>
+		#endregion
+
+		#region Handles* and On* Methods
+
+<#
+		foreach(var ev in events)
+		{
+#>
+		public bool Handles<#= ev.Name #> => <#= ev.Name #> != null || Element.<#= ev.Name #>Command != null;
+
+		public bool On<#= ev.Name #>(<#= ev.EventArg #>EventArgs args)
+		{
+			var handled = false;
+
+			if (Handles<#= ev.Name #>)
+			{
+				RaiseEvent(<#= ev.Name #>, args);
+
+				ICommand command = null;
+				object parameter = null;
+				try
+				{
+					command = Element.<#= ev.Name #>Command;
+					parameter = Element.<#= ev.Name #>CommandParameter;
+				}
+				catch (Exception ex) { Debug.WriteLine(ex); }
+				ExecuteCommand(command, parameter, args);
+
+				handled = args.Handled;
+			}
+
+			return handled;
+		}
+<#
+		}
+#>
+		#endregion
+	}
+
+	#endregion
+}

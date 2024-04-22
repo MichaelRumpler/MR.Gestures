@@ -1,0 +1,87 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Memory" #>
+<#@ assembly name="System.Text.Json" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text.Json" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using Android.Content;
+using Android.Views;
+
+using MR.Gestures.Android;
+
+namespace MR.Gestures.Handlers
+{
+<#
+
+	var handlers = ReadFile();
+
+	foreach(var handler in handlers)
+	{
+		if(!string.IsNullOrEmpty(handler.Android))
+			RenderClass(handler.Name, "global::" + handler.Android);
+	}
+#>
+}
+<#+
+	private void RenderClass(string handler, string platformView)
+	{
+#>
+    public partial class <#= handler #>Handler : Microsoft.Maui.Handlers.<#= handler #>Handler
+    {
+        protected override <#= platformView #> CreatePlatformView()
+            => new Gestures<#= handler #>AndroidView(Context);
+
+        protected override void ConnectHandler(<#= platformView #> platformView)
+        {
+            base.ConnectHandler(platformView);
+            ((Gestures<#= handler #>AndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
+            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
+        }
+
+        class Gestures<#= handler #>AndroidView : <#= platformView #>
+        {
+            public Gestures<#= handler #>AndroidView(Context context) : base(context) { }
+
+            public IGestureAwareControl Element;
+
+            public override bool DispatchTouchEvent(MotionEvent e)
+            {
+                AndroidGestureHandler.HandleMotionEvent(Element, this, e);
+                return base.DispatchTouchEvent(e);
+            }
+
+            public override bool DispatchGenericMotionEvent(MotionEvent e)
+            {
+                AndroidGestureHandler.HandleMotionEvent(Element, this, e);
+                return base.DispatchGenericMotionEvent(e);
+            }
+        }
+    }
+
+<#+
+	}
+
+    private IEnumerable<HandlerModel> ReadFile()
+    {
+        string fileName = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "Handlers.json");
+        StreamReader reader = new StreamReader(fileName);
+        var handlers = System.Text.Json.JsonSerializer.Deserialize<HandlerModel[]>(reader.BaseStream);
+        return handlers;
+    }
+
+[Serializable]
+public class HandlerModel
+{
+    public string Name { get; set; }
+    public bool Shared { get; set; }
+    public string Android { get; set; }
+    public string iOS { get; set; }
+    public string Mac { get; set; }
+    public string Windows { get; set; }
+}
+
+#>

@@ -1,0 +1,135 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-android;net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!--<TargetFrameworks>net8.0;net8.0-android;net8.0-ios;net8.0-windows10.0.19041</TargetFrameworks>-->
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+
+		<AssemblyName>MR.Gestures</AssemblyName>
+		<RootNamespace>MR.Gestures</RootNamespace>
+		<Product>$(AssemblyName) ($(TargetFramework))</Product>
+		<Copyright>Copyright 2015-$([System.DateTime]::Now.Year)</Copyright>
+		<PackageIcon>images\icon.png</PackageIcon>
+
+		<Version>5.0.0</Version>
+		<PackageVersion>$(Version)</PackageVersion>
+
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);CS1591;MA002</NoWarn>
+		<Authors>Michael Rumpler</Authors>
+		<Description>With MR.Gestures you can handle all the touch gestures in your MAUI apps.</Description>
+		<PackageProjectUrl>http://www.mrgestures.com/</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/MichaelRumpler/MR.Gestures</RepositoryUrl>
+		<PackageTags>Gestures;MAUI;Xamarin.Forms;xamarin forms;Android;iOS;phone;tablet;iPhone;iPad;Windows;universal;UWP;WPF;UAP;macOS;Phone;touch;down;up;tap;click;doubletap;doubleclick;press;hold;longpress;pan;drag;swipe;flick;pinch;zoom;rotate;mouseentered;mousemoved;mouseexited;scrollwheelchanged</PackageTags>
+		<PackageReleaseNotes>With MR.Gestures you can handle all the touch gestures in your MAUI apps. Version 5.0.0 makes it free of charge.</PackageReleaseNotes>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="!$(TargetFramework.Contains('-android'))">
+		<Compile Remove="**/*.Android.cs" />
+		<Compile Remove="**/Android/**/*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition="!$(TargetFramework.Contains('-ios')) AND !$(TargetFramework.Contains('-maccatalyst'))">
+		<Compile Remove="**/*.iOS.cs" />
+		<Compile Remove="**/iOS/**/*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition="!$(TargetFramework.Contains('-windows'))">
+		<Compile Remove="**/*.Windows.cs" />
+		<Compile Remove="**/Windows/**/*.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="**/*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(Compile)" />
+		<None Include="..\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="Resources\Images\icon.png" Pack="true" PackagePath="images\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Controls.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Controls.tt</DependentUpon>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Controls.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>Controls.cs</LastGenOutput>
+	  </None>
+	  <None Update="Handlers\Handlers.iOS.cs">
+	    <DependentUpon>Handlers.iOS.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </None>
+	  <None Update="Handlers\Handlers.iOS.tt">
+	    <LastGenOutput>Handlers.iOS.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	  <None Update="Handlers\Handlers.Windows.cs">
+	    <DependentUpon>Handlers.Windows.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </None>
+	  <None Update="Handlers\Handlers.Windows.tt">
+	    <LastGenOutput>Handlers.Windows.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	  <None Update="Handlers\Handlers.Android.cs">
+	    <DependentUpon>Handlers.Android.tt</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </None>
+	  <None Update="Handlers\Handlers.Android.tt">
+	    <LastGenOutput>Handlers.Android.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	  <None Update="Handlers\Handlers.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>Handlers.cs</LastGenOutput>
+	  </None>
+	  <None Update="Handlers\Handlers.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Handlers.tt</DependentUpon>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Controls.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Controls.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="Handlers\Handlers.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Handlers.tt</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+</Project>

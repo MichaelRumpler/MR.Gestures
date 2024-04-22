@@ -1,0 +1,90 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Memory" #>
+<#@ assembly name="System.Text.Json" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+namespace MR.Gestures.Handlers
+{
+<#
+	var handlers = ReadFile();
+
+	foreach(var handler in handlers)
+	{
+		if(handler.Shared)
+			RenderClass(handler.Name);
+	}
+#>
+}
+
+namespace MR.Gestures
+{
+    public static partial class MauiAppBuilderExtensions
+	{
+		private static void ConfigureGesturesHandlers(IMauiHandlersCollection handlers)
+		{
+<#
+	foreach(var handler in handlers)
+	{
+		if(handler.Elements == null)
+		{
+#>
+            handlers.AddHandler<MR.Gestures.<#= handler.Name #>, MR.Gestures.Handlers.<#= handler.Name #>Handler>();
+<#
+		}
+		else
+		{
+			foreach(var element in handler.Elements)
+			{
+#>
+            handlers.AddHandler<MR.Gestures.<#= element #>, MR.Gestures.Handlers.<#= handler.Name #>Handler>();
+<#
+			}
+		}
+	}
+#>
+		}
+	}
+}
+<#+
+	private void RenderClass(string handler)
+	{
+#>
+	public partial class <#= handler #>Handler : Microsoft.Maui.Handlers.<#= handler #>Handler
+	{
+		public static new PropertyMapper<IGestureAwareControl, IElementHandler> Mapper
+			= new(HandlerHelper.GesturesMapper, Microsoft.Maui.Handlers.<#= handler #>Handler.Mapper);
+
+		public <#= handler #>Handler() : base(Mapper) { }
+
+		public <#= handler #>Handler(IPropertyMapper mapper = null) : base(mapper ?? Mapper) { }
+	}
+
+<#+
+	}
+	
+    private IEnumerable<HandlerModel> ReadFile()
+    {
+        string fileName = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "Handlers.json");
+        StreamReader reader = new StreamReader(fileName);
+        var handlers = System.Text.Json.JsonSerializer.Deserialize<HandlerModel[]>(reader.BaseStream);
+        return handlers;
+    }
+
+[Serializable]
+public class HandlerModel
+{
+    public string Name { get; set; }
+    public bool Shared { get; set; }
+	public string[] Elements { get; set; }
+    public string Android { get; set; }
+    public string iOS { get; set; }
+    public string Mac { get; set; }
+    public string Windows { get; set; }
+}
+
+#>
