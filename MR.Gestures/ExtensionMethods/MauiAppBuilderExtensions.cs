@@ -8,7 +8,6 @@ namespace MR.Gestures
     {
         /// <summary>
         /// Initialize MR.Gestures.
-        /// Without licenseKey the EventArgs in all MR.Gestures events will not be set!
         /// </summary>
         /// <param name="builder">The <see cref="MauiAppBuilder"/>.</param>
         /// <returns>The <see cref="MauiAppBuilder"/> (for builder pattern).</returns>
@@ -29,7 +28,7 @@ namespace MR.Gestures
 
             builder.ConfigureMauiHandlers(handlers =>
             {
-                ConfigureGesturesHandlers(handlers);
+                ConfigureGestureHandlers(handlers);
 
 #if WINDOWS || ANDROID || IOS || MACCATALYST
                 handlers.AddHandler<MR.Gestures.Frame, MR.Gestures.Handlers.FrameRenderer>();

@@ -266,7 +266,7 @@ namespace MR.Gestures
 {
     public static partial class MauiAppBuilderExtensions
 	{
-		private static void ConfigureGesturesHandlers(IMauiHandlersCollection handlers)
+		private static void ConfigureGestureHandlers(IMauiHandlersCollection handlers)
 		{
             handlers.AddHandler<MR.Gestures.ActivityIndicator, MR.Gestures.Handlers.ActivityIndicatorHandler>();
             handlers.AddHandler<MR.Gestures.Border, MR.Gestures.Handlers.BorderHandler>();
