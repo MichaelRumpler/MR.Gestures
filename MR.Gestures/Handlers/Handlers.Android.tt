@@ -39,7 +39,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((Gestures<#= handler #>AndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class Gestures<#= handler #>AndroidView : <#= platformView #>

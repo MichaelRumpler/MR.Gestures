@@ -12,6 +12,16 @@ namespace MR.Gestures
 
 	public partial class AbsoluteLayout : Microsoft.Maui.Controls.AbsoluteLayout, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public AbsoluteLayout()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -745,6 +755,16 @@ namespace MR.Gestures
 
 	public partial class ActivityIndicator : Microsoft.Maui.Controls.ActivityIndicator, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public ActivityIndicator()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -1478,6 +1498,16 @@ namespace MR.Gestures
 
 	public partial class BoxView : Microsoft.Maui.Controls.BoxView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public BoxView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -2211,6 +2241,16 @@ namespace MR.Gestures
 
 	public partial class Border : Microsoft.Maui.Controls.Border, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Border()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -2944,6 +2984,16 @@ namespace MR.Gestures
 
 	public partial class Button : Microsoft.Maui.Controls.Button, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Button()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -3677,6 +3727,16 @@ namespace MR.Gestures
 
 	public partial class CheckBox : Microsoft.Maui.Controls.CheckBox, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public CheckBox()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -4410,6 +4470,16 @@ namespace MR.Gestures
 
 	public partial class ContentPage : Microsoft.Maui.Controls.ContentPage, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public ContentPage()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -5143,6 +5213,16 @@ namespace MR.Gestures
 
 	public partial class ContentView : Microsoft.Maui.Controls.ContentView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public ContentView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -5876,6 +5956,16 @@ namespace MR.Gestures
 
 	public partial class DatePicker : Microsoft.Maui.Controls.DatePicker, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public DatePicker()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -6609,6 +6699,16 @@ namespace MR.Gestures
 
 	public partial class Editor : Microsoft.Maui.Controls.Editor, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Editor()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -7342,6 +7442,16 @@ namespace MR.Gestures
 
 	public partial class Entry : Microsoft.Maui.Controls.Entry, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Entry()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -8808,6 +8918,16 @@ namespace MR.Gestures
 
 	public partial class FlexLayout : Microsoft.Maui.Controls.FlexLayout, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public FlexLayout()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -9541,6 +9661,16 @@ namespace MR.Gestures
 
 	public partial class Frame : Microsoft.Maui.Controls.Frame, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Frame()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -10274,6 +10404,16 @@ namespace MR.Gestures
 
 	public partial class GraphicsView : Microsoft.Maui.Controls.GraphicsView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public GraphicsView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -11007,6 +11147,16 @@ namespace MR.Gestures
 
 	public partial class Grid : Microsoft.Maui.Controls.Grid, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Grid()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -11740,6 +11890,16 @@ namespace MR.Gestures
 
 	public partial class HorizontalStackLayout : Microsoft.Maui.Controls.HorizontalStackLayout, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public HorizontalStackLayout()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -12473,6 +12633,16 @@ namespace MR.Gestures
 
 	public partial class Image : Microsoft.Maui.Controls.Image, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Image()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -13206,6 +13376,16 @@ namespace MR.Gestures
 
 	public partial class ImageButton : Microsoft.Maui.Controls.ImageButton, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public ImageButton()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -14672,6 +14852,16 @@ namespace MR.Gestures
 
 	public partial class IndicatorView : Microsoft.Maui.Controls.IndicatorView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public IndicatorView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -15405,6 +15595,16 @@ namespace MR.Gestures
 
 	public partial class Label : Microsoft.Maui.Controls.Label, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Label()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -16138,6 +16338,16 @@ namespace MR.Gestures
 
 	public partial class ListView : Microsoft.Maui.Controls.ListView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public ListView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -16871,6 +17081,16 @@ namespace MR.Gestures
 
 	public partial class Picker : Microsoft.Maui.Controls.Picker, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Picker()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -17604,6 +17824,16 @@ namespace MR.Gestures
 
 	public partial class ProgressBar : Microsoft.Maui.Controls.ProgressBar, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public ProgressBar()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -18337,6 +18567,16 @@ namespace MR.Gestures
 
 	public partial class RadioButton : Microsoft.Maui.Controls.RadioButton, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public RadioButton()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -19070,6 +19310,16 @@ namespace MR.Gestures
 
 	public partial class ScrollView : Microsoft.Maui.Controls.ScrollView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public ScrollView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -19803,6 +20053,16 @@ namespace MR.Gestures
 
 	public partial class SearchBar : Microsoft.Maui.Controls.SearchBar, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public SearchBar()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -20536,6 +20796,16 @@ namespace MR.Gestures
 
 	public partial class Slider : Microsoft.Maui.Controls.Slider, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Slider()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -21269,6 +21539,16 @@ namespace MR.Gestures
 
 	public partial class StackLayout : Microsoft.Maui.Controls.StackLayout, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public StackLayout()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -22002,6 +22282,16 @@ namespace MR.Gestures
 
 	public partial class Stepper : Microsoft.Maui.Controls.Stepper, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Stepper()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -22735,6 +23025,16 @@ namespace MR.Gestures
 
 	public partial class Switch : Microsoft.Maui.Controls.Switch, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public Switch()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -24201,6 +24501,16 @@ namespace MR.Gestures
 
 	public partial class TabbedPage : Microsoft.Maui.Controls.TabbedPage, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public TabbedPage()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -24934,6 +25244,16 @@ namespace MR.Gestures
 
 	public partial class TableView : Microsoft.Maui.Controls.TableView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public TableView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -26400,6 +26720,16 @@ namespace MR.Gestures
 
 	public partial class TimePicker : Microsoft.Maui.Controls.TimePicker, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public TimePicker()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -27133,6 +27463,16 @@ namespace MR.Gestures
 
 	public partial class VerticalStackLayout : Microsoft.Maui.Controls.VerticalStackLayout, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public VerticalStackLayout()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;
@@ -28599,6 +28939,16 @@ namespace MR.Gestures
 
 	public partial class WebView : Microsoft.Maui.Controls.WebView, IGestureAwareControl
 	{
+        #region Constructor, Loaded, Unloaded
+
+        public WebView()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;

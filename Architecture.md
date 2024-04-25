@@ -49,7 +49,6 @@ They each define static methods
 
 - `AddInstance`
 - `RemoveInstance`
-- `OnElementChanged`
 - `OnElementPropertyChanged`
 
 The static methods are called from the handlers. They create instances of the respective `*GestureHandler` classes which do everything they need to do to handle the touch gestures on the native platform.

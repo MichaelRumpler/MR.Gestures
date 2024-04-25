@@ -1,9 +1,8 @@
-﻿//#define LOGINSTANCES
+﻿#define LOGINSTANCES
 
 using System.Diagnostics;
 using System.Text;
 
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
@@ -52,15 +51,6 @@ namespace MR.Gestures.WinUI
 						parentElement.CellsToDispose.Remove(cell);
 				}
 			}
-		}
-
-		public static void OnElementChanged(IGestureAwareControl oldElement, IGestureAwareControl newElement, FrameworkElement view)
-		{
-			if (oldElement != null)
-				RemoveInstance(oldElement);
-
-			if (newElement != null)
-				AddInstance(newElement, view);
 		}
 
 		public static void OnElementPropertyChanged(IGestureAwareControl element, FrameworkElement view)
@@ -131,8 +121,8 @@ namespace MR.Gestures.WinUI
 
 			// add event handlers
 
-			//view.Loaded += (s, e) => Log(view.GetType().FullName + " Loaded");
-			//view.Unloaded += (s, e) => Log(view.GetType().FullName + " Unloaded");
+			//view.Loaded += (s, e) => Log(view.GetType().FullName + " view.Loaded");
+			//view.Unloaded += (s, e) => Log(view.GetType().FullName + " view.Unloaded");
 
 			#region handle elements visibility
 
@@ -215,7 +205,6 @@ namespace MR.Gestures.WinUI
 			if(element is VisualElement visElem)
             {
 				// All but the Cells. Those have to be unloaded with the ListView/TableView.
-				//visElem.Unloaded += Element_Unloaded;
 				visElem.HandlerChanging += Element_HandlerChanging;
 			}
 
@@ -231,6 +220,11 @@ namespace MR.Gestures.WinUI
 
         private void View_Loaded(object sender, RoutedEventArgs e)
         {
+			//Log($"View_Loaded {view}, adding pointer handlers");
+
+			if (view is null)		// initialization hang and view has already been disposed
+				return;
+
             view.Loaded -= View_Loaded;
 
 			_pointerPressedHandler = new PointerEventHandler(Window_PointerPressed);
@@ -249,11 +243,6 @@ namespace MR.Gestures.WinUI
             root.AddHandler(UIElement.PointerExitedEvent, _pointerExitedHandler, true);
 			root.AddHandler(UIElement.PointerWheelChangedEvent, _pointerWheelChangedHandler, true);
         }
-
-        //private void Element_Unloaded(object sender, System.EventArgs e)
-        //{
-        //    RemoveInstance(element);
-        //}
 
 		private void Element_HandlerChanging(object sender, HandlerChangingEventArgs e)
 		{
@@ -829,10 +818,7 @@ namespace MR.Gestures.WinUI
 				}
 
 				if (element is VisualElement visElem)
-				{
-					//visElem.Unloaded -= Element_Unloaded;
 					visElem.HandlerChanging -= Element_HandlerChanging;
-				}
 
 #if LOGINSTANCES
 				Instances--;
@@ -889,40 +875,12 @@ namespace MR.Gestures.WinUI
             Log(method);
 		}
 
-		static StringBuilder logSb = null;
-		private static StringBuilder LogSB
-		{
-			get
-			{
-				if (logSb == null)
-				{
-					logSb = new StringBuilder();
-
-					//var dispatcher = Microsoft.Maui.Controls.Application.Current.FindDispatcher();
-					//dispatcher.StartTimer(interval, callback);
-
-					Device.StartTimer(TimeSpan.FromSeconds(2), () =>
-					{
-						if (logSb != null && logSb.Length > 0)
-						{
-							Debug.WriteLine(logSb);
-							logSb.Clear();
-						}
-						return true;
-					});
-				}
-				return logSb;
-			}
-		}
-
-		private void Log(string s)
+		private static void Log(string s)
 		{
             var threadType = System.Threading.Thread.CurrentThread.IsBackground ? "BG" : "UI";
-			var bc = element is Element el ? $"[BC:{el.BindingContext}] " : null;
-            s = $"{DateTime.Now:HH:mm:ss.fff}: [T:{threadType}] {bc}: {s}";
-            
+            s = $"{DateTime.Now:HH:mm:ss.fff}: [T:{threadType}]: {s}";
+
 			Debug.WriteLine(s);
-			//LogSB.AppendLine(s);
 		}
 #endif
 

@@ -17,14 +17,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesRadioButtonAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
-        }
-
-        // DisconnectHandler is never called https://github.com/dotnet/maui/issues/3604 - on no platform
-        protected override void DisconnectHandler(PlatformView platformView)
-        {
-            AndroidGestureHandler.RemoveInstance((IGestureAwareControl)VirtualView);
-            base.DisconnectHandler(platformView);
         }
 
         class GesturesRadioButtonAndroidView : AndroidX.AppCompat.Widget.AppCompatRadioButton

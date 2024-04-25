@@ -1,14 +1,12 @@
-//#define LOGINSTANCES
+#define LOGINSTANCES
 
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
 using Android.Views;
-using Microsoft.Maui.Controls;
-
 using AView = Android.Views.View;
+
 
 namespace MR.Gestures.Android
 {
@@ -58,77 +56,14 @@ namespace MR.Gestures.Android
         /// <param name="element">The MR.Gestures element.</param>
         public static void RemoveInstance(IGestureAwareControl element)
 		{
-#if LOGINSTANCES
-			Log($"Removing Instance {element.GetType().Name}, BindingContext={((Element)element).BindingContext}");
-#endif
             if (element != null && allGestureHandlers.Remove(element, out var concreteHandler))
 			{
 #if LOGINSTANCES
-				Log("Removed from allGestureHandlers");
+				Log($"Removed Instance {element.GetType().Name}, BindingContext={((Element)element).BindingContext} from allGestureHandlers");
 #endif
 
                 concreteHandler.Dispose();
 			}
-			else
-			{
-#if LOGINSTANCES
-				Log("Not found in allGestureHandlers");
-#endif
-            }
-        }
-
-        /// <summary>
-        /// Called from a View renderers OnElementChanged method.
-        /// </summary>
-        /// <param name="oldElement"></param>
-        /// <param name="newElement"></param>
-        /// <param name="view"></param>
-        public static void OnElementChanged(IGestureAwareControl oldElement, IGestureAwareControl newElement, AView view)
-		{
-#if LOGINSTANCES
-			Log($"OnElementChanged({ElementLog(oldElement)}, {ElementLog(newElement)})");
-#endif
-            if (oldElement == newElement)		// Xamarin is better save than sorry
-				return;
-
-			if (oldElement != null)
-			{
-				RemoveInstance(oldElement);
-			}
-			if (newElement != null)
-			{
-				//var gestureHandler = ((IGestureAwareControl)newElement).GestureHandler;
-				//System.Diagnostics.Debug.Write($"OnElementChanged(), Element handles:");
-				//if (gestureHandler.HandlesDown) System.Diagnostics.Debug.Write(" Down");
-				//if (gestureHandler.HandlesUp) System.Diagnostics.Debug.Write(" Up");
-				//if (gestureHandler.HandlesTapping) System.Diagnostics.Debug.Write(" Tapping");
-				//if (gestureHandler.HandlesTapped) System.Diagnostics.Debug.Write(" Tapped");
-				//if (gestureHandler.HandlesDoubleTapped) System.Diagnostics.Debug.Write(" DoubleTapped");
-				//if (gestureHandler.HandlesPanning) System.Diagnostics.Debug.Write(" Panning");
-				//if (gestureHandler.HandlesPanned) System.Diagnostics.Debug.Write(" Panned");
-				//System.Diagnostics.Debug.WriteLine("");
-
-				if (newElement is VisualElement visElem && !visElem.IsLoaded)
-					visElem.Loaded += Element_Loaded;
-				else
-					Element_Loaded(newElement, null);
-			}
-		}
-
-        private static void Element_Loaded(object sender, System.EventArgs e)
-        {
-			if(sender is VisualElement visElem)
-				visElem.Loaded -= Element_Loaded;
-
-			var element = (IGestureAwareControl)sender;
-			var handler = element.Handler;
-
-            if (handler is Microsoft.Maui.Handlers.ViewHandler viewHandler)
-                handler.UpdateValue(nameof(IViewHandler.ContainerView));
-            else
-                viewHandler = null;
-
-            AddInstance(element, viewHandler?.ContainerView ?? (AView)handler.PlatformView);
         }
 
         /// <summary>
@@ -198,9 +133,9 @@ namespace MR.Gestures.Android
 			mouseGestureDetector = new MouseGestureDetector(mouseGestureListener);
 
 			view.Touch += HandleTouch;
-            view.GenericMotion += HandleGenericMotion;
-
-            if (element is VisualElement visElem)
+			view.GenericMotion += HandleGenericMotion;
+			
+			if (element is VisualElement visElem)
             {
                 // All but the Cells. Those have to be unloaded with the ListView/TableView.
                 //visElem.Unloaded += Element_Unloaded;
@@ -209,8 +144,8 @@ namespace MR.Gestures.Android
 
 			if (element is Cell cell)
             {
-                cell.Appearing += Cell_Appearing;
-                cell.Disappearing += Cell_Disappearing;
+				cell.Appearing += Cell_Appearing;
+				cell.Disappearing += Cell_Disappearing;
 
                 if (cell.Parent is ListView list)
                     list.CellsToDispose.Add(cell);
@@ -222,8 +157,6 @@ namespace MR.Gestures.Android
 				multiPage.CurrentPageChanged += MultiPage_CurrentPageChanged;
 				//multiPage.Unloaded += MultiPage_Unloaded;
 				multiPage.HandlerChanging += MultiPage_HandlerChanging;
-				if (element is VisualElement visElem2)
-                    visElem2.Loaded += MultiPage_Element_Loaded;
 			}
 
 #if LOGINSTANCES
@@ -382,8 +315,8 @@ namespace MR.Gestures.Android
 		private void MultiPage_HandlerChanging(object sender, HandlerChangingEventArgs e)
 		{
 #if LOGINSTANCES
-			var nh = e.NewHandler is null ? "null" : "set";
-			var oh = e.OldHandler is null ? "null" : "set";
+			var nh = e.NewHandler is null ? "null" : e.NewHandler.GetType().FullName;
+			var oh = e.OldHandler is null ? "null" : e.OldHandler.GetType().FullName;
 			Log($"MultiPage_HandlerChanging {ElementLog(element)}, NewHandler is {nh}, OldHandler is {oh}");
 #endif
 
@@ -407,10 +340,10 @@ namespace MR.Gestures.Android
 
 		private bool HandleMotionEvent(MotionEvent e)
 		{
-            //PrintMotionEvent("HandleMotionEvent", e);
+			//PrintMotionEvent("HandleMotionEvent", e);
 
-            var skip = !isVisible || MatchesLastMotionEvent(e);
-            //Console.WriteLine($"MotionEvent.EventTime={e.EventTime}, Action={e.Action}, Source={e.Source}, ActionButton={e.ActionButton}, ButtonState={e.ButtonState} ... " + (skip ? "skiping" : "processing"));
+			var skip = !isVisible || MatchesLastMotionEvent(e);
+            //Console.WriteLine($"MotionEvent.EventTime={e.EventTime}, Action={e.Action}, Source={e.Source}, ActionButton={e.ActionButton}, ButtonState={e.ButtonState} ... " + (skip ? "skipping" : "processing"));
             if (skip) return false;
 
 
@@ -510,27 +443,14 @@ namespace MR.Gestures.Android
 			return $"{element.GetType().Name}({element.GetHashCode()}), BindingContext={bindingContext}";
 		}
 
-		static StringBuilder logSb = new StringBuilder();
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void Log(string s)
 		{
-			s = DateTime.Now.ToString("HH:mm:ss.fff") + ": " + s;
+			var threadType = System.Threading.Thread.CurrentThread.IsBackground ? "BG" : "UI";
+			s = $"{DateTime.Now:HH:mm:ss.fff}: [T:{threadType}]: {s}";
+
 			Debug.Write(s);
-			//logSb.AppendLine(s);
 		}
 
-		static AndroidGestureHandler()
-		{
-			Device.StartTimer(TimeSpan.FromSeconds(2), () =>
-			{
-				if (logSb != null && logSb.Length > 0)
-				{
-					Debug.Write(logSb);
-					logSb.Clear();
-				}
-				return true;
-			});
-		}
 #endif
 
 		#endregion

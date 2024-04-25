@@ -1,4 +1,4 @@
-﻿//#define LOGINSTANCES
+﻿#define LOGINSTANCES
 
 using System;
 using System.Collections.Generic;
@@ -60,37 +60,6 @@ namespace MR.Gestures.iOS
 				concreteHandler.Dispose();
             }
 		}
-
-        public static void OnElementChanged(IGestureAwareControl oldElement, IGestureAwareControl newElement, UIView view)
-		{
-			if(oldElement != null)
-			{
-				RemoveInstance(oldElement);
-			}
-			if(newElement != null)
-			{
-                if (newElement is VisualElement visElem && !visElem.IsLoaded)
-                    visElem.Loaded += Element_Loaded;
-                else
-                    Element_Loaded(newElement, null);
-			}
-		}
-
-        private static void Element_Loaded(object sender, System.EventArgs e)
-        {
-            if (sender is VisualElement visElem)
-                visElem.Loaded -= Element_Loaded;
-
-            var element = (IGestureAwareControl)sender;
-            var handler = element.Handler;
-
-            if (handler is Microsoft.Maui.Handlers.ViewHandler viewHandler)
-                handler.UpdateValue(nameof(IViewHandler.ContainerView));
-            else
-                viewHandler = null;
-
-            AddInstance(element, viewHandler?.ContainerView ?? (UIKit.UIView)handler.PlatformView);
-        }
 
         public static void OnElementPropertyChanged(IGestureAwareControl element, UIView view)
 		{
@@ -185,11 +154,6 @@ namespace MR.Gestures.iOS
 				view.AddGestureRecognizer(gr);
 			}
 		}
-
-        //private void Element_Unloaded(object sender, System.EventArgs e)
-        //{
-        //    RemoveInstance(element);
-        //}
 
 		private void Element_HandlerChanging(object sender, HandlerChangingEventArgs e)
 		{
@@ -364,8 +328,7 @@ namespace MR.Gestures.iOS
 
 				if (element is VisualElement visElem)
 				{
-					//visElem.Unloaded -= Element_Unloaded;
-					visElem.HandlerChanging += Element_HandlerChanging;
+					visElem.HandlerChanging -= Element_HandlerChanging;
 				}
 
 				if (element is Cell cell)
@@ -735,24 +698,12 @@ namespace MR.Gestures.iOS
 			Log(String.Format("iOSGestureHandler.{0}, Element is a {1}, Total instances: {2}", method, element.GetType().Name, Instances));
 		}
 
-		static StringBuilder logSb = new StringBuilder();
 		private static void Log(string s)
 		{
-			//logSb.AppendLine(s);
-			Debug.WriteLine(s);
-		}
+			var threadType = System.Threading.Thread.CurrentThread.IsBackground ? "BG" : "UI";
+			s = $"{DateTime.Now:HH:mm:ss.fff}: [T:{threadType}]: {s}";
 
-		static iOSGestureHandler()
-		{
-			Device.StartTimer(TimeSpan.FromSeconds(2), () =>
-			{
-				if (logSb != null && logSb.Length > 0)
-				{
-					Debug.Write(logSb);
-					logSb.Clear();
-				}
-				return true;
-			});
+			Debug.WriteLine(s);
 		}
 #endif
 

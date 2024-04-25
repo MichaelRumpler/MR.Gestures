@@ -3,8 +3,6 @@ using Android.Views;
 
 using MR.Gestures.Android;
 
-using System.Diagnostics;
-
 namespace MR.Gestures.Handlers
 {
     public partial class TextCellRenderer : Microsoft.Maui.Controls.Handlers.Compatibility.TextCellRenderer
@@ -13,9 +11,9 @@ namespace MR.Gestures.Handlers
         {
             var view = base.GetCellCore(item, convertView, parent, context);
 
-            //Debug.WriteLine($"{DateTime.Now:HH:mm:ss.fff}: TextCellRenderer.GetCellCore for cell {item.BindingContext}");
+			//System.Diagnostics.Debug.WriteLine($"{DateTime.Now:HH:mm:ss.fff}: TextCellRenderer.GetCellCore for cell {item.BindingContext}");
 
-            AndroidGestureHandler.AddInstance((IGestureAwareControl)item, view);
+			AndroidGestureHandler.AddInstance((IGestureAwareControl)item, view);
             return view;
         }
     }

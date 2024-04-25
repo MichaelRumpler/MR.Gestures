@@ -14,7 +14,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesActivityIndicatorAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesActivityIndicatorAndroidView : global::Android.Widget.ProgressBar
@@ -46,7 +45,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesBorderAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesBorderAndroidView : global::Microsoft.Maui.Platform.ContentViewGroup
@@ -78,7 +76,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesButtonAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesButtonAndroidView : global::Google.Android.Material.Button.MaterialButton
@@ -110,7 +107,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesCheckBoxAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesCheckBoxAndroidView : global::AndroidX.AppCompat.Widget.AppCompatCheckBox
@@ -142,7 +138,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesContentViewAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesContentViewAndroidView : global::Microsoft.Maui.Platform.ContentViewGroup
@@ -174,7 +169,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesDatePickerAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesDatePickerAndroidView : global::Microsoft.Maui.Platform.MauiDatePicker
@@ -206,7 +200,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesEditorAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesEditorAndroidView : global::AndroidX.AppCompat.Widget.AppCompatEditText
@@ -238,7 +231,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesEntryAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesEntryAndroidView : global::AndroidX.AppCompat.Widget.AppCompatEditText
@@ -270,7 +262,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesGraphicsViewAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesGraphicsViewAndroidView : global::Microsoft.Maui.Platform.PlatformTouchGraphicsView
@@ -302,7 +293,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesImageAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesImageAndroidView : global::Android.Widget.ImageView
@@ -334,7 +324,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesImageButtonAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesImageButtonAndroidView : global::Google.Android.Material.ImageView.ShapeableImageView
@@ -366,7 +355,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesIndicatorViewAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesIndicatorViewAndroidView : global::Microsoft.Maui.Platform.MauiPageControl
@@ -398,7 +386,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesLabelAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesLabelAndroidView : global::AndroidX.AppCompat.Widget.AppCompatTextView
@@ -430,7 +417,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesLayoutAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesLayoutAndroidView : global::Microsoft.Maui.Platform.LayoutViewGroup
@@ -462,7 +448,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesPageAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesPageAndroidView : global::Microsoft.Maui.Platform.ContentViewGroup
@@ -494,7 +479,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesPickerAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesPickerAndroidView : global::Microsoft.Maui.Platform.MauiPicker
@@ -526,7 +510,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesProgressBarAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesProgressBarAndroidView : global::Android.Widget.ProgressBar
@@ -558,7 +541,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesScrollViewAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesScrollViewAndroidView : global::Microsoft.Maui.Platform.MauiScrollView
@@ -590,7 +572,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesSearchBarAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesSearchBarAndroidView : global::AndroidX.AppCompat.Widget.SearchView
@@ -622,7 +603,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesShapeViewAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesShapeViewAndroidView : global::Microsoft.Maui.Platform.MauiShapeView
@@ -654,7 +634,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesSliderAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesSliderAndroidView : global::Android.Widget.SeekBar
@@ -686,7 +665,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesStepperAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesStepperAndroidView : global::Microsoft.Maui.Platform.MauiStepper
@@ -718,7 +696,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesSwitchAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesSwitchAndroidView : global::AndroidX.AppCompat.Widget.SwitchCompat
@@ -750,7 +727,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesTimePickerAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesTimePickerAndroidView : global::Microsoft.Maui.Platform.MauiTimePicker
@@ -782,7 +758,6 @@ namespace MR.Gestures.Handlers
         {
             base.ConnectHandler(platformView);
             ((GesturesWebViewAndroidView)platformView).Element = (IGestureAwareControl)VirtualView;
-            AndroidGestureHandler.OnElementChanged(null, (IGestureAwareControl)VirtualView, platformView);
         }
 
         class GesturesWebViewAndroidView : global::Android.Webkit.WebView

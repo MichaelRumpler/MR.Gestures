@@ -1,9 +1,5 @@
-﻿using System.ComponentModel;
-
-using Android.Content;
+﻿using Android.Content;
 using Android.Views;
-
-using Microsoft.Maui.Controls.Platform;
 
 using MR.Gestures.Android;
 
@@ -13,13 +9,6 @@ namespace MR.Gestures.Handlers
     {
         public FrameRenderer(Context context) : base(context)
         {
-        }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<Microsoft.Maui.Controls.Frame> e)
-        {
-            base.OnElementChanged(e);
-
-            AndroidGestureHandler.OnElementChanged((IGestureAwareControl)e.OldElement, (IGestureAwareControl)e.NewElement, Control);
         }
 
         public override bool DispatchTouchEvent(MotionEvent e)

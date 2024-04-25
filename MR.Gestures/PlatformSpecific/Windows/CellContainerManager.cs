@@ -7,29 +7,17 @@ namespace MR.Gestures.WinUI
         readonly IGestureAwareControl element;
 		Microsoft.UI.Xaml.Controls.ListView listView;
 		
-		HashSet<IGestureAwareControl> cells;		// the cells which have my functionallity added
+		HashSet<IGestureAwareControl> cells;		// the cells which have my functionality added
 
 		public CellContainerManager(IGestureAwareControl element, Microsoft.UI.Xaml.Controls.ListView view)
 		{
 			this.element = element;
 			listView = view;
 
-            if (!listView.IsLoaded || listView.Dispatcher == null)
-            {
-                listView.Loaded += ListView_Loaded;
-            }
-            else
-            {
-				ListView_Loaded(null, null);
-            }
-        }
+			listView.LayoutUpdated += ThrottleUpdateCells;
 
-        private void ListView_Loaded(object sender, RoutedEventArgs e)
-        {
-            listView.Loaded -= ListView_Loaded;
-            listView.LayoutUpdated += ThrottleUpdateCells;          // throttleUpdateCells cannot be used because it uses Device.BeginInvokeOnMainThread and this is broken
 			ThrottleUpdateCells(null, null);
-        }
+		}
 
         #region method to throttle the LayoutUpdated event
 
@@ -58,7 +46,7 @@ namespace MR.Gestures.WinUI
 					await Task.Delay(200, cancelLayoutUpdatedHandler.Token);
 					cancelLayoutUpdatedHandler = null;      // I cannot be cancelled anymore
 
-					listView?.DispatcherQueue.TryEnqueue(UpdateCells);
+					listView?.DispatcherQueue?.TryEnqueue(UpdateCells);
 
 				}, cancelLayoutUpdatedHandler.Token);
 			}
@@ -72,42 +60,34 @@ namespace MR.Gestures.WinUI
 			if (listView == null)
 				return;
 
-			var allCells = listView.FindAllChildren<Microsoft.Maui.Controls.Platform.Compatibility.CellControl>().ToArray();		// TODO: test if this is the correct type
+			var allCells = listView.FindAllChildren<Microsoft.Maui.Controls.Platform.Compatibility.CellControl>().ToArray();
 
 			if (cells == null) cells = new HashSet<IGestureAwareControl>();
 			var unusedCells = new HashSet<IGestureAwareControl>(cells);
 
 			foreach (var cellTemplate in allCells)
 			{
-                //var cell = cellTemplate.GetValue(CellControl.CellProperty) as IGestureAwareControl;					// Xamarin.Forms for WP 8.0 SL
-                if (cellTemplate.Cell is IGestureAwareControl cell)                                                     // Xamarin.Forms for UWP
+                if (cellTemplate.Cell is IGestureAwareControl cell && cell.Parent is not null)
 				{
-                    if (!cells.Contains(cell))
-                    {
-                        Add((Cell)cell, cellTemplate);
-                        cells.Add(cell);
-                    }
+					if (!cells.Contains(cell))
+					{
+						Add((Cell)cell, cellTemplate);
+						cells.Add(cell);
+					}
 
-                    unusedCells.Remove(cell);
-                }
-            }
+					unusedCells.Remove(cell);
+				}
+			}
 			foreach (var cell in unusedCells)
 			{
-				Dispose((Cell)cell);
+				Remove(cell);
 				if (cells != null)
 					cells.Remove(cell);
 			}
 		}
 
-		void Add(Cell cell, FrameworkElement view)
-		{
-			WinUIGestureHandler.AddInstance((IGestureAwareControl)cell, view);
-		}
-
-		void Dispose(Cell cell)
-		{
-			WinUIGestureHandler.RemoveInstance((IGestureAwareControl)cell);
-		}
+		void Add(Cell cell, FrameworkElement view) => WinUIGestureHandler.AddInstance((IGestureAwareControl)cell, view);
+		void Remove(IGestureAwareControl cell) => WinUIGestureHandler.RemoveInstance(cell);
 
 		#region IDisposable Members
 
@@ -123,7 +103,6 @@ namespace MR.Gestures.WinUI
 			{
 				if (this.listView != null)
 				{
-                    this.listView.Loaded -= ListView_Loaded;
                     this.listView.LayoutUpdated -= ThrottleUpdateCells;
 					this.listView = null;
 				}
@@ -131,7 +110,7 @@ namespace MR.Gestures.WinUI
 				if (cells != null)
 				{
 					foreach (var cell in cells)
-						Dispose((Cell)cell);
+						Remove(cell);
 					cells = null;
 				}
 

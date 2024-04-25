@@ -46,6 +46,23 @@ namespace MR.Gestures
 
 	public partial class <#= cls #> : Microsoft.Maui.Controls.<#= cls #>, IGestureAwareControl
 	{
+<#
+		if(!cls.EndsWith("Cell"))
+		{
+#>
+        #region Constructor, Loaded, Unloaded
+
+        public <#= cls #>()
+        {
+			Loaded += LoadedHelper.Element_Loaded;
+			Unloaded += LoadedHelper.Element_Unloaded;
+        }
+
+		#endregion
+
+<#
+		}
+#>
 		#region GestureHandler
 
 		private GestureHandler gestureHandler;

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-using Android.Content;
+﻿using Android.Content;
 using Android.Views;
 
 using Microsoft.Maui.Controls.Platform;
@@ -23,7 +21,6 @@ namespace MR.Gestures.Handlers
             base.OnElementChanged(e);
 
             ((GesturesListViewAndroidView)Control).Element = (IGestureAwareControl)e.NewElement;
-            AndroidGestureHandler.OnElementChanged((IGestureAwareControl)e.OldElement, (IGestureAwareControl)Element, Control);
         }
 
         protected override void Dispose(bool disposing)
