@@ -47,6 +47,9 @@ namespace MR.Gestures.Handlers
 
             public IGestureAwareControl Element;
 
+<#+
+            // DispatchTouchEvent is more reliable than OnTouchEvent. The latter is sometimes swallowed by the native controls.
+#>
             public override bool DispatchTouchEvent(MotionEvent e)
             {
                 AndroidGestureHandler.HandleMotionEvent(Element, this, e);

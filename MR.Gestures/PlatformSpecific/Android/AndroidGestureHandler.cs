@@ -132,9 +132,14 @@ namespace MR.Gestures.Android
 			mouseGestureListener = new MouseGestureListener(element, view, listener);
 			mouseGestureDetector = new MouseGestureDetector(mouseGestureListener);
 
-			view.Touch += HandleTouch;
-			view.GenericMotion += HandleGenericMotion;
-			
+			if (element is not DatePicker && element is not Editor && element is not ListView && element is not Picker && element is not ScrollView && element is not Slider)
+			{
+				// In the elements listed above attaching the Touch event handler breaks the functionality of the element - even if the handler doesn't do anything.
+				// But other elements (ContentPage, AbsoluteLayout, ...) stop working without those Touch event handlers even though the underlying Android view overrides OnTouchEvent and DispatchTouchEvent
+				view.Touch += HandleTouch;
+				view.GenericMotion += HandleGenericMotion;
+			}
+
 			if (element is VisualElement visElem)
             {
                 // All but the Cells. Those have to be unloaded with the ListView/TableView.
