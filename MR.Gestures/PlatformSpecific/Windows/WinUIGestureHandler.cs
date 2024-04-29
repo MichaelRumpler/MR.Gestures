@@ -1,4 +1,4 @@
-﻿#define LOGINSTANCES
+﻿//#define LOGINSTANCES
 
 using System.Diagnostics;
 using System.Text;
@@ -115,15 +115,6 @@ namespace MR.Gestures.WinUI
 			this.view = view;
 			this.listener = listener ?? new GestureThrottler(new GestureFilter(element, element.GestureHandler));
 
-			// explains why ScrollView consumes gestures: http://blogs.msdn.com/b/wsdevsol/archive/2013/02/16/where-did-all-my-gestures-go.aspx
-			// my stackoverflow article: http://stackoverflow.com/questions/31407832/touch-input-and-direct-manipulation
-
-
-			// add event handlers
-
-			//view.Loaded += (s, e) => Log(view.GetType().FullName + " view.Loaded");
-			//view.Unloaded += (s, e) => Log(view.GetType().FullName + " view.Unloaded");
-
 			#region handle elements visibility
 
 			var cell = element as Cell;
@@ -160,7 +151,6 @@ namespace MR.Gestures.WinUI
 			if (element.GestureHandler.HandlesTapping || element.GestureHandler.HandlesTapped || element.GestureHandler.HandlesDoubleTapped)
 			{
 				gestureRecognizer.Tapped += OnTap;
-				//gestureRecognizer.DoubleTapped += onDoubleTap;
 
 				mode |= GestureSettings.Tap;
 			}
@@ -247,8 +237,8 @@ namespace MR.Gestures.WinUI
 		private void Element_HandlerChanging(object sender, HandlerChangingEventArgs e)
 		{
 #if LOGINSTANCES
-			var nh = e.NewHandler is null ? "null" : "set";
-			var oh = e.OldHandler is null ? "null" : "set";
+			var nh = e.NewHandler is null ? "null" : e.NewHandler.GetType().Name;
+			var oh = e.OldHandler is null ? "null" : e.OldHandler.GetType().Name;
 			Log($"Element_HandlerChanging NewHandler is {nh}, OldHandler is {oh}");
 #endif
 
@@ -511,7 +501,7 @@ namespace MR.Gestures.WinUI
             }
             catch
             {
-                //Log($"IsOverView: an exception occured in VisualTreeHelper.FindElementsInHostCoordinates: {ex}");
+                //Log($"IsOverView: an exception occurred in VisualTreeHelper.FindElementsInHostCoordinates: {ex}");
             }
 
             return elements != null && elements.Length > 0;

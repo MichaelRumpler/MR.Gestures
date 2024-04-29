@@ -1,13 +1,7 @@
-﻿#define LOGINSTANCES
+﻿//#define LOGINSTANCES
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using UIKit;
 
@@ -76,17 +70,6 @@ namespace MR.Gestures.iOS
 			}
 		}
 
-		static bool? s_isiOS13_4OrNewer;
-		public static bool IsiOS13_4OrNewer
-		{
-			get
-			{
-				if (!s_isiOS13_4OrNewer.HasValue)
-					s_isiOS13_4OrNewer = UIDevice.CurrentDevice.CheckSystemVersion(13, 4);
-				return s_isiOS13_4OrNewer.Value;
-			}
-		}
-
 		#endregion
 
 		#region Private fields
@@ -112,7 +95,6 @@ namespace MR.Gestures.iOS
             if (element is VisualElement visElem)
             {
                 // All but the Cells. Those have to be unloaded with the ListView/TableView.
-                //visElem.Unloaded += Element_Unloaded;
 				visElem.HandlerChanging += Element_HandlerChanging;
             }
 
@@ -147,9 +129,10 @@ namespace MR.Gestures.iOS
 			this.view = view;
 			this.gestureRecognizers = CreateGestureRecognizers();
 
+			var supportsShouldReceiveEvent = UIDevice.CurrentDevice.CheckSystemVersion(13, 4);
 			foreach (var gr in gestureRecognizers)
 			{
-				if (IsiOS13_4OrNewer)
+				if (supportsShouldReceiveEvent)
 					gr.ShouldReceiveEvent = (gr, ev) => true;
 				view.AddGestureRecognizer(gr);
 			}
@@ -158,8 +141,8 @@ namespace MR.Gestures.iOS
 		private void Element_HandlerChanging(object sender, HandlerChangingEventArgs e)
 		{
 #if LOGINSTANCES
-			var nh = e.NewHandler is null ? "null" : "set";
-			var oh = e.OldHandler is null ? "null" : "set";
+			var nh = e.NewHandler is null ? "null" : e.NewHandler.GetType().Name;
+			var oh = e.OldHandler is null ? "null" : e.OldHandler.GetType().Name;
 			Log($"Element_HandlerChanging NewHandler is {nh}, OldHandler is {oh}");
 #endif
 
@@ -180,19 +163,6 @@ namespace MR.Gestures.iOS
 			if (element.GestureHandler.HandlesDown || element.GestureHandler.HandlesUp
 				|| element.GestureHandler.HandlesPanning || element.GestureHandler.HandlesPanned)		// first panning needs lastDownArgs
 			{
-				//if (view is UIControl ctrl)
-				//{
-				//	// see https://github.com/xamarin/xamarin-macios/issues/4598
-					
-				//	//ctrl.AddTarget(this, new ObjCRuntime.Selector("slider:event:"), UIControlEvent.ValueChanged);		// "this" needs to be a NSObject
-
-				//	ctrl.AddTarget(OnTouchDown, UIControlEvent.TouchDown);
-				//	ctrl.AddTarget(OnTouchUpInside, UIControlEvent.TouchUpInside);
-				//	ctrl.AddTarget(OnTouchUpOutside, UIControlEvent.TouchUpOutside);
-				//}
-
-				// TODO: else
-
 				var downUpGr = new DownUpGestureRecognizer(this)
 				{
 					ShouldRecognizeSimultaneously = (thisGr, otherGr) => true,
@@ -319,12 +289,7 @@ namespace MR.Gestures.iOS
 		{
 			if (disposing)
 			{
-				if (gestureRecognizers != null)
-				{
-					foreach (var gr in gestureRecognizers)
-						gr.View.RemoveGestureRecognizer(gr);
-					gestureRecognizers = null;
-				}
+				RemoveGestureRecognizers();
 
 				if (element is VisualElement visElem)
 				{

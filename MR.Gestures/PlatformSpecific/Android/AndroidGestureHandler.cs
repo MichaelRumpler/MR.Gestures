@@ -1,7 +1,6 @@
-#define LOGINSTANCES
+//#define LOGINSTANCES
 
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 using Android.Views;
@@ -74,13 +73,6 @@ namespace MR.Gestures.Android
         public static void OnElementPropertyChanged(IGestureAwareControl element, AView view)
 		{
 			// not used on Android, currently all GestureListeners are always called
-
-			//if (element != null)
-			//{
-			//	var handler = GetInstance(element);
-			//	handler.removeGestureRecognizers();
-			//	handler.addGestureRecognizers(renderer);
-			//}
 		}
 
 		/// <summary>
@@ -132,7 +124,8 @@ namespace MR.Gestures.Android
 			mouseGestureListener = new MouseGestureListener(element, view, listener);
 			mouseGestureDetector = new MouseGestureDetector(mouseGestureListener);
 
-			if (element is not DatePicker && element is not Editor && element is not ListView && element is not Picker && element is not ScrollView && element is not Slider)
+			if (element is not DatePicker && element is not Editor && element is not ListView && element is not Picker &&
+				 element is not ScrollView && element is not Slider && element is not Switch && element is not TimePicker)
 			{
 				// In the elements listed above attaching the Touch event handler breaks the functionality of the element - even if the handler doesn't do anything.
 				// But other elements (ContentPage, AbsoluteLayout, ...) stop working without those Touch event handlers even though the underlying Android view overrides OnTouchEvent and DispatchTouchEvent
@@ -143,7 +136,6 @@ namespace MR.Gestures.Android
 			if (element is VisualElement visElem)
             {
                 // All but the Cells. Those have to be unloaded with the ListView/TableView.
-                //visElem.Unloaded += Element_Unloaded;
 				visElem.HandlerChanging += Element_HandlerChanging;
 			}
 
@@ -160,8 +152,7 @@ namespace MR.Gestures.Android
 			if (multiPage != null)
 			{
 				multiPage.CurrentPageChanged += MultiPage_CurrentPageChanged;
-				//multiPage.Unloaded += MultiPage_Unloaded;
-				multiPage.HandlerChanging += MultiPage_HandlerChanging;
+				multiPage.HandlerChanging += Element_HandlerChanging;
 			}
 
 #if LOGINSTANCES
@@ -189,7 +180,7 @@ namespace MR.Gestures.Android
                     Log($"element is a ListView with {children.Length} children");
 #endif
                     foreach (var child in children)
-                        AndroidGestureHandler.RemoveInstance(child);
+                        RemoveInstance(child);
                 }
 
                 if (element is TableView tableView)
@@ -199,7 +190,7 @@ namespace MR.Gestures.Android
                     Log($"element is a TableView with {children.Length} cells");
 #endif
                     foreach (var child in children)
-                        AndroidGestureHandler.RemoveInstance(child);
+                        RemoveInstance(child);
                 }
 
                 if (view != null)
@@ -223,7 +214,6 @@ namespace MR.Gestures.Android
 
 				if (element is VisualElement visElem)
 				{
-					//visElem.Unloaded -= Element_Unloaded;
 					visElem.HandlerChanging -= Element_HandlerChanging;
 				}
 
@@ -238,10 +228,7 @@ namespace MR.Gestures.Android
                 if (multiPage != null)
                 {
                     multiPage.CurrentPageChanged -= MultiPage_CurrentPageChanged;
-                    //multiPage.Unloaded -= MultiPage_Unloaded;
-					multiPage.HandlerChanging -= MultiPage_HandlerChanging;
-					if (element is VisualElement visElem2)
-                        visElem2.Loaded -= MultiPage_Element_Loaded;
+					multiPage.HandlerChanging -= Element_HandlerChanging;
                     multiPage = null;
                 }
 
@@ -256,26 +243,11 @@ namespace MR.Gestures.Android
 
         #region Other event handlers
 
-//        private void Element_Unloaded(object sender, System.EventArgs e)
-//        {
-//            // A TabbedPage (=MultiPage) raises Unloaded when the current page changes.
-//            // This must not remove the instance.
-//            // Remove it only if no MultiPage is involved.
-
-//#if LOGINSTANCES
-//            Log($"Element_Unloaded {ElementLog(element)}");
-//#endif
-//            if (multiPage != null)
-//				isVisible = false;
-//			else
-//	            RemoveInstance(element);
-//        }
-
 		private void Element_HandlerChanging(object sender, HandlerChangingEventArgs e)
 		{
 #if LOGINSTANCES
-			var nh = e.NewHandler is null ? "null" : "set";
-			var oh = e.OldHandler is null ? "null" : "set";
+			var nh = e.NewHandler is null ? "null" : e.NewHandler.GetType().Name;
+			var oh = e.OldHandler is null ? "null" : e.OldHandler.GetType().Name;
             Log($"Element_HandlerChanging {ElementLog(element)}, NewHandler is {nh}, OldHandler is {oh}");
 #endif
 
@@ -301,34 +273,6 @@ namespace MR.Gestures.Android
 #endif
         }
 
-        private void MultiPage_Element_Loaded(object sender, System.EventArgs e)
-        {
-            isVisible = true;
-#if LOGINSTANCES
-            Log($"MultiPage_Element_Loaded: isVisible set to {isVisible}");
-#endif
-        }
-
-//        private void MultiPage_Unloaded(object sender, System.EventArgs e)
-//        {
-//#if LOGINSTANCES
-//            Log($"MultiPage_Unloaded");
-//#endif
-//            RemoveInstance(element);
-//        }
-
-		private void MultiPage_HandlerChanging(object sender, HandlerChangingEventArgs e)
-		{
-#if LOGINSTANCES
-			var nh = e.NewHandler is null ? "null" : e.NewHandler.GetType().FullName;
-			var oh = e.OldHandler is null ? "null" : e.OldHandler.GetType().FullName;
-			Log($"MultiPage_HandlerChanging {ElementLog(element)}, NewHandler is {nh}, OldHandler is {oh}");
-#endif
-
-			if (e.NewHandler is null)
-				RemoveInstance(element);
-		}
-
         #endregion
 
         #region Touch handling
@@ -348,8 +292,8 @@ namespace MR.Gestures.Android
 			//PrintMotionEvent("HandleMotionEvent", e);
 
 			var skip = !isVisible || MatchesLastMotionEvent(e);
-            //Console.WriteLine($"MotionEvent.EventTime={e.EventTime}, Action={e.Action}, Source={e.Source}, ActionButton={e.ActionButton}, ButtonState={e.ButtonState} ... " + (skip ? "skipping" : "processing"));
-            if (skip) return false;
+			//Debug.WriteLine($"{element.GetType().Name} {((BindableObject)element).BindingContext as string}: MotionEvent.EventTime={e.EventTime}, Action={e.Action}, Source={e.Source}, ActionButton={e.ActionButton}, ButtonState={e.ButtonState} ... " + (skip ? "skipping" : "processing"));
+			if (skip) return false;
 
 
 			bool handled = false;
